@@ -1,0 +1,20 @@
+.gba {
+  background-image: url(../images/game-boy.png);
+  background-size: cover;
+  background-position: center;
+  height: 95vh;
+  width: 95vw;
+}
+
+#canvas {
+  margin: 6.5% 22.5%;
+}
+
+#bcg-game, #sonic-player, #gold-ring {
+  display: none;
+}
+
+#single-player {
+  border: 1px solid black;
+  border-radius: 25px;
+}
