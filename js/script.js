@@ -5,11 +5,6 @@ let little = document.getElementById('little-red');
 let coins = document.getElementById('gold-ring');
 let weapon = document.getElementById('weapon')
 
-// let singleP = document.getElementById('single-player');
-// singleP.onclick = () => {
-//   startGame();
-// }
-
 class Sonic1P {
   constructor (canvas, sonicBg) {
     this.width = canvas.width;
@@ -44,6 +39,9 @@ class Sonic1P {
       if (this.frames % 173 == 0) {
         this.enemies.push(new Little(this.width, this.floorY-50, 50, 50, little))
       }
+      if (this.sonicCoins % 5 == 0 && this.sonicCoins > this.weapon.length * 5) {
+        this.weapon.push(new Weapon(this.player.x + this.player.w, this.player.y + this.player.h / 2, 50, 50, weapon))
+      }
       this.coinsArr.forEach((coin,ci) => {
         if (this.player.checkCollition(coin)){
           this.sonicCoins+=1;
@@ -56,9 +54,6 @@ class Sonic1P {
           this.enemies.splice(ei,1);
         }
       })
-      if (this.sonicCoins % 5 == 0 && this.sonicCoins > this.weapon.length * 1) {
-        this.weapon.push(new Weapon(this.player.x + this.player.w, 50, 50, weapon))
-      }
       this.draw()
     },1000/60)
   }
@@ -74,6 +69,10 @@ class Sonic1P {
     this.enemies.forEach(e => {
       e.x-=5;
       e.drawItself(this.ctx)
+    })
+    this.weapon.forEach((bullet, bi) => {
+      bullet.x+=10
+      bullet.drawItself(this.ctx);
     })
   }
 
@@ -116,9 +115,6 @@ class Sonic1P {
   createKeyEvents() {
    document.onkeydown = (event) => {
      switch(event.which) {
-       case 32:
-       // this.ctx.drawImage(this.player.x + this.player.w,this.player.w/2, 50, 50, weapon)
-       // this.weapon.drawItself(this.ctx);
        case 37:
        this.move(5);
        this.moveBack(20);
@@ -131,19 +127,22 @@ class Sonic1P {
        this.moveBack(-20);
        break;
        case 40:
-       this.player.goDown(this.ctx)
+       this.player.goDown(this.ctx);
+       // case 32:
+       // this.generateBullets()
        default:
        break;
       }
     }
-  document.onkeyup = (event) => {
-    switch(event.which) {
-      case 40:
-      this.player.goUp(this.ctx)
-      break;
+
+    document.onkeyup = (event) => {
+      switch(event.which) {
+        case 40:
+        this.player.goUp(this.ctx)
+        break;
+       }
      }
    }
- }
 }
 
 class Unit {
@@ -216,18 +215,14 @@ class Little extends Unit {
 
 class Weapon extends Unit {
   drawItself(ctx) {
-    this.weapon.forEach(wpn => {
-      wpn+=10;
-      ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
-    })
+    ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
   }
-
-  checkCollition(unit) {
-    if (this.x + (this.w/2) > unit.x && unit.x + unit.w > this.x && this.y < unit.y + unit.h && this.y + this.h > unit.y) {
-      return true;
-    }
-    return false;
-  }
+  // checkCollition(unit) {
+  //   if (this.x + (this.w/2) > unit.x && unit.x + unit.w > this.x && this.y < unit.y + unit.h && this.y + this.h > unit.y) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 }
 
 class Sonic2P {
@@ -236,3 +231,8 @@ class Sonic2P {
 
 let game = new Sonic1P(canvas, sonicBg);
 game.startGame();
+
+// let singleP = document.getElementById('single-player');
+// singleP.onclick = () => {
+//   startGame();
+// }
