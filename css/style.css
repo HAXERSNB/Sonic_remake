@@ -1,14 +1,26 @@
 .gba {
   background-image: url(../images/game-boy.png);
-  background-size: cover;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
   height: 95vh;
-  width: 95vw;
+  width: 99vw;
 }
 
-#canvas {
-  margin: 6.5% 22.5%;
+@media (min-width:1440px) {
+  #canvas {
+    height: 470px;
+    margin-top: 8.2%;
+    margin-left: 25.9%;
+    width: 710px;
+  }
 }
+
+
 
 #bcg-game, #sonic-player, #gold-ring, #little-red, #weapon {
   display: none;

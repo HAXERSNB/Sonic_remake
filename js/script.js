@@ -55,7 +55,15 @@ class Sonic1P {
         }
       })
       this.draw()
+      this.endGame()
     },1000/60)
+  }
+
+  endGame() {
+    if (this.frames > 200 && this.sonicCoins == 0) {
+      clearInterval(this.interval);
+      alert('YOU LOSE');
+    }
   }
 
   draw() {
