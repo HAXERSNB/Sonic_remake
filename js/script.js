@@ -3,7 +3,8 @@ let sonicBg = document.getElementById('bcg-game');
 let sonicImg = document.getElementById('sonic-player');
 let little = document.getElementById('little-red');
 let coins = document.getElementById('gold-ring');
-let weapon = document.getElementById('weapon')
+let weapon = document.getElementById('weapon');
+let boss = document.getElementById('boss')
 
 class Sonic1P {
   constructor (canvas, sonicBg) {
@@ -22,17 +23,16 @@ class Sonic1P {
     this.coinsArr = [];
     this.enemies = [];
     this.weapon = [];
+    this.boss;
     this.frames = 0;
   }
 
   startGame() {
     this.createKeyEvents();
-    this.player = new Sonic(0, 350, 55, 125, sonicImg)
+    this.player = new Sonic(0, 350, 55, 125, sonicImg);
+    this.boss = new Boss(this.width - 200, this.floorY-200, 200, 200, boss);
     this.interval = setInterval(() => {
       this.frames++
-      // if (this.player.y > this.floorY) {
-      //   this.player.y+=this.gravity;
-      // }
       if (this.frames % 10 == 0) {
         this.coinsArr.push(new Coin(this.width, this.floorY-25, 25, 25, coins))
       }
@@ -52,6 +52,13 @@ class Sonic1P {
         if (this.player.checkCollition(enemy)) {
           this.sonicCoins-=10;
           this.enemies.splice(ei,1);
+        }
+      })
+      this.weapon.forEach((bullet, bi) => {
+        if (this.boss.checkCollition(bullet)) {
+          boss.live-=5;
+          this.weapon.splice(bi,1);
+          console.log(this.boss.live)
         }
       })
       this.draw()
@@ -82,6 +89,7 @@ class Sonic1P {
       bullet.x+=10
       bullet.drawItself(this.ctx);
     })
+    this.boss.bossReady(this.ctx, this.gravity, this.floorY);
   }
 
   drawBackground() {
@@ -217,7 +225,11 @@ class Little extends Unit {
     this.y = Math.floor(Math.random() * 400);
   }
   drawItself(ctx) {
-    ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
+    if (this.enemies == 5) {
+
+    } else {
+      ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
+    }
   }
 }
 
@@ -225,12 +237,26 @@ class Weapon extends Unit {
   drawItself(ctx) {
     ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
   }
-  // checkCollition(unit) {
-  //   if (this.x + (this.w/2) > unit.x && unit.x + unit.w > this.x && this.y < unit.y + unit.h && this.y + this.h > unit.y) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+}
+
+class Boss extends Unit {
+  constructor (x, y, w, h, src) {
+    super (x, y, w, h, src)
+    this.live = 50;
+  }
+
+  checkCollition(unit) {
+    if (this.x + (this.w) > unit.x && unit.x + unit.w > this.x && this.y < unit.y + unit.h && this.y + this.h > unit.y) {
+      return true;
+    }
+    return false;
+  }
+
+  bossReady(ctx) {
+    // if (this.sonicCoins) {
+      ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
+    // }
+  }
 }
 
 class Sonic2P {
