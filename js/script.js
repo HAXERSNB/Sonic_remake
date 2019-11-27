@@ -264,9 +264,9 @@ class Sonic2P {
 }
 
 let game = new Sonic1P(canvas, sonicBg);
-game.startGame();
+// game.startGame();
 
-// let singleP = document.getElementById('single-player');
-// singleP.onclick = () => {
-//   startGame();
-// }
+let singleP = document.getElementById('single-player');
+singleP.onclick = () => {
+  game.startGame();
+}
