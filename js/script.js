@@ -54,13 +54,13 @@ class Sonic1P {
           this.enemies.splice(ei,1);
         }
       })
-      this.weapon.forEach((bullet, bi) => {
-        if (this.boss.checkCollition(bullet)) {
-          boss.live-=5;
-          this.weapon.splice(bi,1);
-          console.log(this.boss.live)
-        }
-      })
+      // this.weapon.forEach((bullet, bi) => {
+      //   if (this.boss.checkCollition(bullet)) {
+      //     boss.live-=5;
+      //     this.weapon.splice(bi,1);
+      //     console.log(this.boss.live)
+      //   }
+      // })
       this.draw()
       this.endGame()
     },1000/60)
