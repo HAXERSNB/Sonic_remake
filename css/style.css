@@ -29,4 +29,6 @@
 #single-player {
   border: 1px solid black;
   border-radius: 25px;
+  padding: 2 5px;
+  width: 100px;
 }
