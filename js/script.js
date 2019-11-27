@@ -269,4 +269,9 @@ let game = new Sonic1P(canvas, sonicBg);
 let singleP = document.getElementById('single-player');
 singleP.onclick = () => {
   game.startGame();
+  hideButton()
+}
+
+function hideButton() {
+  singleP.style.display = 'none';
 }
