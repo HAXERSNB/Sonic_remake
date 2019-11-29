@@ -4,7 +4,8 @@ let sonicImg = document.getElementById('sonic-player');
 let little = document.getElementById('little-red');
 let coins = document.getElementById('gold-ring');
 let weapon = document.getElementById('weapon');
-let boss = document.getElementById('boss')
+let boss = document.getElementById('boss');
+let score =document.getElementById('score');
 
 class Sonic1P {
   constructor (canvas, sonicBg) {
@@ -24,23 +25,28 @@ class Sonic1P {
     this.enemies = [];
     this.weapon = [];
     this.boss;
+    this.usedCoins = 0;
     this.frames = 0;
+  }
+
+  shoot() {
+    if (this.sonicCoins - this.usedCoins >= 5) {
+      this.usedCoins+=5;
+      this.weapon.push(new Weapon(this.player.x + this.player.w, this.player.y + this.player.h / 2, 50, 50, weapon))
+    }
   }
 
   startGame() {
     this.createKeyEvents();
     this.player = new Sonic(0, 350, 55, 125, sonicImg);
-    this.boss = new Boss(this.width - 200, this.floorY-200, 200, 200, boss);
+    this.boss = new Boss(this.width - 250, this.floorY-250, 250, 250, boss);
     this.interval = setInterval(() => {
       this.frames++
       if (this.frames % 10 == 0) {
-        this.coinsArr.push(new Coin(this.width, this.floorY-25, 25, 25, coins))
+        this.coinsArr.push(new Coin(this.width, this.floorY-50, 50, 50, coins))
       }
       if (this.frames % 173 == 0) {
-        this.enemies.push(new Little(this.width, this.floorY-50, 50, 50, little))
-      }
-      if (this.sonicCoins % 5 == 0 && this.sonicCoins > this.weapon.length * 5) {
-        this.weapon.push(new Weapon(this.player.x + this.player.w, this.player.y + this.player.h / 2, 50, 50, weapon))
+        this.enemies.push(new Little(this.width, this.floorY-75, 75, 75, little))
       }
       this.coinsArr.forEach((coin,ci) => {
         if (this.player.checkCollition(coin)){
@@ -54,22 +60,32 @@ class Sonic1P {
           this.enemies.splice(ei,1);
         }
       })
-      // this.weapon.forEach((bullet, bi) => {
-      //   if (this.boss.checkCollition(bullet)) {
-      //     boss.live-=5;
-      //     this.weapon.splice(bi,1);
-      //     console.log(this.boss.live)
-      //   }
-      // })
+      this.weapon.forEach((bullet, bi) => {
+        if (this.boss.checkCollition(bullet)) {
+          this.boss.life-=5;
+          this.weapon.splice(bi,1);
+        }
+      })
+      console.log(this.weapon.length)
       this.draw()
-      this.endGame()
+      this.moveBack(-5);
+      this.gameOver();
+      this.updateScore();
+      this.winGame();
     },1000/60)
   }
 
-  endGame() {
+  gameOver() {
     if (this.frames > 200 && this.sonicCoins == 0) {
       clearInterval(this.interval);
       alert('YOU LOSE');
+    }
+  }
+
+  winGame() {
+    if (this.frames > 500 && this.boss.life == 0) {
+      clearInterval(this.interval);
+      alert('YOU WIN');
     }
   }
 
@@ -78,18 +94,20 @@ class Sonic1P {
     this.drawBackground();
     this.player.drawItself(this.ctx, this.gravity, this.floorY);
     this.coinsArr.forEach(coin => {
-      coin.x-=10;
+      coin.x-=15;
       coin.drawItself(this.ctx)
     })
     this.enemies.forEach(e => {
-      e.x-=5;
+      e.x-=15;
       e.drawItself(this.ctx)
     })
     this.weapon.forEach((bullet, bi) => {
       bullet.x+=10
       bullet.drawItself(this.ctx);
     })
-    this.boss.bossReady(this.ctx, this.gravity, this.floorY);
+    if (this.sonicCoins > 50) {
+      this.boss.bossReady(this.ctx, this.gravity, this.floorY);
+    }
   }
 
   drawBackground() {
@@ -127,27 +145,31 @@ class Sonic1P {
    this.sonicBgX+=value;
   }
 
+  updateScore() {
+    score.innerHTML = 'Sonic Coins: ' + this.sonicCoins + ' Used Coins: ' + this.usedCoins + ' Bullets available: ' + this.weapon.length + ' Boss life ' + this.boss.life;
+  }
+
   //Event Listener
   createKeyEvents() {
    document.onkeydown = (event) => {
      switch(event.which) {
-       case 37:
-       this.move(5);
-       this.moveBack(20);
-       break;
-       case 38:
-       this.player.jump(this.gravity);
-       break;
-       case 39:
-       this.move(-5);
-       this.moveBack(-20);
-       break;
-       case 40:
-       this.player.goDown(this.ctx);
-       // case 32:
-       // this.generateBullets()
-       default:
-       break;
+        case 37:
+          this.move(5);
+          break;
+        case 38:
+          this.player.jump(this.gravity);
+          break;
+        case 39:
+          this.move(-5);
+          break;
+        case 40:
+          this.player.goDown(this.ctx);
+          break;
+        case 32:
+          this.shoot()
+          break;
+        default:
+          break;
       }
     }
 
@@ -242,7 +264,7 @@ class Weapon extends Unit {
 class Boss extends Unit {
   constructor (x, y, w, h, src) {
     super (x, y, w, h, src)
-    this.live = 50;
+    this.life = 50;
   }
 
   checkCollition(unit) {

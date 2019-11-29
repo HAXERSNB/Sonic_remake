@@ -11,6 +11,13 @@
   width: 99vw;
 }
 
+#canvas {
+  max-width: 675px;
+  min-width: 674px;
+  max-height: 445px;
+  min-height: 444px;
+}
+
 @media (min-width:1440px) {
   #canvas {
     height: 445px;
