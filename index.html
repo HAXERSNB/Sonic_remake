@@ -4,11 +4,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline&display=swap" rel="stylesheet">
     <title>Game</title>
   </head>
-  <body>
-    <div class="gba">
+  <body onload='hideSecondAndThird()'>
+    <div id="first-screen">
+      <button id="first-button" type="button" name="first-button">Start Game</button>
+    </div>
+    <div id="second-screen">
+      <button id="second-button" type="button" name="button">NEXT ➔</button>
+    </div>
+    <div id="game-screen" class="gba">
+      <div class="score-container">
+        <div class="score-divs">
+          <p>Sonic Coins </p>
+          <span>=</span>
+          <span id="span-sonic-coins">250</span>
+        </div>
+        <div class="score-divs">
+          <p>Coins Used</p>
+          <span>=</span>
+          <span id="span-coins-used">250</span>
+        </div>
+        <div class="score-divs">
+          <p>Bullets Available</p>
+          <span>=</span>
+          <span id="span-bullets-available">250</span>
+        </div>
+        <div class="score-divs">
+          <p>Boss Life</p>
+          <span>=</span>
+          <span id="span-boss-life">250</span>
+        </div>
+      </div>
       <canvas id="canvas" width="776" height="517"></canvas>
+      <button id="start-game-button" type="button" name="button"></button>
     </div>
     <img id="bcg-game" src="images/background-game.png" alt="">
     <img id='sonic-player' src="images/sonic.png" alt="">
@@ -16,8 +46,7 @@
     <img id="little-red" src="images/little-red.png" alt="">
     <img id='weapon' src="images/weapon.png" alt="">
     <img id="boss" src="images/eggman.png" alt="">
-    <button id="single-player" type="button" name="single-player">Single Player</button>
-    <p id="score">Score</p>
+    <script src="js/sonic-game.js" charset="utf-8"></script>
     <script src="js/script.js" charset="utf-8"></script>
   </body>
 </html>

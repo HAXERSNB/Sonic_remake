@@ -1,28 +1,126 @@
+* {
+  box-sizing: content-box;
+}
+
+#first-screen {
+  background-image: url(../images/home-screen.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 95vh;
+  width: 99vw;
+}
+
+#first-button {
+  transition: all .5s;
+  background-color: #0E57D6;
+  border: 1px solid #EAD311;
+  border-radius: 5px;
+  font-family: 'Phosphate';
+  font-size: 32px;
+  margin-bottom: 5%;
+  padding: 25px;
+}
+
+#first-button:hover {
+  transform: scale(1.1);
+}
+
+#second-screen {
+  background-image: url(../images/instructions-screen.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 95vh;
+  width: 99vw;
+}
+
+#second-button {
+  transition: all .5s;
+  background-color: #0E57D6;
+  border: 1px solid #EAD311;
+  border-radius: 5px;
+  font-family: 'Phosphate';
+  font-size: 32px;
+  margin-bottom: 5%;
+  padding: 25px;
+}
+
+#second-button:hover {
+  transform: scale(1.1);
+}
+
 .gba {
   background-image: url(../images/game-boy.png);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   background-origin: content-box;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   height: 95vh;
   width: 99vw;
 }
 
+.score-container {
+  display: flex;
+  font-family: 'Phosphate';
+  font-size: 18px;
+  justify-content: space-around;
+}
+
+.score-divs {
+  background-color: rgba(14, 87, 214, .9);
+  border: 1px solid #ECCD3A;
+  padding: 0 50px;
+}
+
+.gba p, .gba span {
+  display: inline;
+}
+
 #canvas {
-  max-width: 675px;
+  max-width: 975px;
   min-width: 674px;
   max-height: 445px;
   min-height: 444px;
 }
 
+#start-game-button {
+  animation: starButton 1s infinite linear;
+  border: 5px solid #0E57D6;
+  border-radius: 30px;
+  position: relative;
+  bottom: 80px;
+  right: 770px;
+  height: 45px;
+  width: 35px;
+}
+
+@keyframes starButton {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (min-width:1440px) {
   #canvas {
     height: 445px;
-    margin-top: 7.8%;
-    margin-left: 27%;
+    margin-top: 13%;
+    margin-left: 25%;
     width: 675px;
   }
 }
