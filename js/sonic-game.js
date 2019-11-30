@@ -96,7 +96,7 @@ class Sonic1P {
   draw() {
     this.ctx.clearRect(0,0,this.width, this.height);
     this.drawBackground();
-    this.player.drawItself(this.ctx, this.gravity, this.floorY);
+    this.player.drawSonic(this.ctx, this.gravity, this.floorY, this.frames);
     this.coinsArr.forEach(coin => {
       coin.x-=15;
       coin.drawItself(this.ctx)
@@ -217,6 +217,7 @@ class Sonic extends Unit {
   constructor (x, y, w, h, src) {
     super (x, y, w, h, src)
     this.h = h;
+    this.sprite = 0;
   }
 
   goDown (ctx) {
@@ -238,6 +239,19 @@ class Sonic extends Unit {
       return true;
     }
     return false;
+  }
+
+  drawSonic(ctx, gravity, floorY, frames) {
+    if (this.y + this.h < floorY) {
+      this.y+=gravity
+    }
+    if (this.y + this.h > floorY) {
+      this.y = floorY - this.h;
+    }
+    if (frames%3){
+      this.sprite = this.sprite == 7 ? 0 : this.sprite + 1;
+    }
+    ctx.drawImage(this.src, this.sprite*32, 0, 29, 50, this.x, this.y, this.w, this.h);
   }
 }
 
