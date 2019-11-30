@@ -84,22 +84,18 @@
   display: inline;
 }
 
-#canvas {
+/* #canvas {
   max-width: 975px;
-  min-width: 674px;
-  max-height: 445px;
+  min-width: 774px;
+  max-height: 545px;
   min-height: 444px;
-}
+} */
 
 #start-game-button {
   animation: starButton 1s infinite linear;
   border: 5px solid #0E57D6;
   border-radius: 30px;
   position: relative;
-  bottom: 80px;
-  right: 770px;
-  height: 45px;
-  width: 35px;
 }
 
 @keyframes starButton {
@@ -118,11 +114,19 @@
 
 @media (min-width:1440px) {
   #canvas {
-    height: 445px;
-    margin-top: 13%;
-    margin-left: 25%;
-    width: 675px;
+    height: 540px;
+    margin-top: 7.5%;
+    margin-left: 22%;
+    width: 825px;
   }
+
+  #start-game-button {
+    bottom: 97px;
+    right: 936px;
+    height: 45px;
+    width: 35px;
+  }
+
 }
 
 

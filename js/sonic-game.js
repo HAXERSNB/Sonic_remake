@@ -27,6 +27,7 @@ class Sonic1P {
     this.coinsArr = [];
     this.enemies = [];
     this.weapon = [];
+    this.bullestAvailable = 0;
     this.boss;
     this.usedCoins = 0;
     this.frames = 0;
@@ -35,7 +36,7 @@ class Sonic1P {
   shoot() {
     if (this.sonicCoins - this.usedCoins >= 5) {
       this.usedCoins+=5;
-      this.weapon.push(new Weapon(this.player.x + this.player.w, this.player.y + this.player.h / 2, 50, 50, weapon))
+      this.weapon.push(new Weapon(this.player.x + this.player.w, this.player.y + this.player.h / 2, 50, 50, weapon));
     }
   }
 
@@ -65,11 +66,11 @@ class Sonic1P {
       })
       this.weapon.forEach((bullet, bi) => {
         if (this.boss.checkCollition(bullet)) {
-          this.boss.life-=5;
           this.weapon.splice(bi,1);
+          this.boss.life-=5;
         }
       })
-      console.log(this.weapon.length)
+      this.bullestAvailable = Math.floor(this.sonicCoins/5);
       this.draw()
       this.moveBack(-5);
       this.gameOver();
@@ -151,7 +152,7 @@ class Sonic1P {
   updateScore() {
     spanSonicCoins.innerHTML = this.sonicCoins;
     spanCoinsUsed.innerHTML = this.usedCoins;
-    spanBulletsAvailable.innerHTML = this.weapon.length;
+    spanBulletsAvailable.innerHTML = this.bullestAvailable;
     spanBossLife.innerHTML = this.boss.life;
   }
 
@@ -172,7 +173,8 @@ class Sonic1P {
           this.player.goDown(this.ctx);
           break;
         case 32:
-          this.shoot()
+          this.bullestAvailable-=1;
+          this.shoot();
           break;
         default:
           break;
