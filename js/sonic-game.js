@@ -111,6 +111,9 @@ class Sonic1P {
     })
     if (this.sonicCoins > 50) {
       this.boss.bossReady(this.ctx, this.gravity, this.floorY);
+      spanBossLife.innerHTML = this.boss.life;
+    } else {
+      spanBossLife.innerHTML = '';
     }
   }
 
@@ -153,7 +156,6 @@ class Sonic1P {
     spanSonicCoins.innerHTML = this.sonicCoins;
     spanCoinsUsed.innerHTML = this.usedCoins;
     spanBulletsAvailable.innerHTML = this.bullestAvailable;
-    spanBossLife.innerHTML = this.boss.life;
   }
 
   //Event Listener
